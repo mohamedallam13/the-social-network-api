@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const { validateEmail, convertToLowerCase } = require("../utils")
 
 // Schema to create Student model
-const userSchema = {
+const reactionSchema = {
     username: {
         type: String,
         required: true,
@@ -29,7 +29,7 @@ const userSchema = {
     assignments: [assignmentSchema],
 }
 const schema = new Schema(
-    userSchema,
+    reactionSchema,
     {
         toJSON: {
             getters: true,
@@ -39,6 +39,6 @@ const schema = new Schema(
 
 schema.pre("save", convertToLowerCase);
 
-const User = model('User', schema);
+const Reaction = model('Reaction', schema);
 
-module.exports = User;
+module.exports = Reaction;
