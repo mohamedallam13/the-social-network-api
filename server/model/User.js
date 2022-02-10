@@ -24,9 +24,12 @@ const userSchema = {
         required: true,
         max_length: 50,
     },
-    thoughts: {},
+    thoughts: {
+        type: Schema.Types.ObjectId,
+        ref: "Thought"
+    },
     friends: {},
-    assignments: [assignmentSchema],
+    assignments: [],
 }
 const schema = new Schema(
     userSchema,

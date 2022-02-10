@@ -1,8 +1,8 @@
 const { Router } = require("express");
-const { addThought } = require("../../controllers");
+const { apiRoutes } = require("./api");
 
 const router = Router();
 
-router.post("/", addThought);
+router.use("/api", apiRoutes)
 
 module.exports = router;

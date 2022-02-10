@@ -3,9 +3,9 @@ const validateEmail = (email) => {
     return emailValidationRegex.test(email)
 }
 
-const convertToLowerCase = (next) => {
+function convertToLowerCase(next) {
     this.email = this.email.toLowercase();
     next();
-}
+} // Mongoose expects normal functions for middleware for the pre method
 
 module.exports = { validateEmail, convertToLowerCase }

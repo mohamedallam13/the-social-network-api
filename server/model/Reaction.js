@@ -24,9 +24,7 @@ const reactionSchema = {
         required: true,
         max_length: 50,
     },
-    thoughts: {},
-    friends: {},
-    assignments: [assignmentSchema],
+    assignments: [],
 }
 const schema = new Schema(
     reactionSchema,
