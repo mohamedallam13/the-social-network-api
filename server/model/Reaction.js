@@ -1,42 +1,30 @@
-const { Schema, model } = require('mongoose');
-const { validateEmail, convertToLowerCase } = require("../utils")
+const { Schema } = require('mongoose');
 
 // Schema to create Student model
 const reactionSchema = {
+    reactionBody: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 280,
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now()
+    },
     username: {
         type: String,
-        required: true,
-        unique: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        validate: [validateEmail, "Please provide a corerct email address"]
-    },
-    first: {
-        type: String,
-        required: true,
-        max_length: 50,
-    },
-    last: {
-        type: String,
-        required: true,
-        max_length: 50,
-    },
-    assignments: [],
+        required: true
+    }
 }
 const schema = new Schema(
     reactionSchema,
     {
         toJSON: {
-            getters: true,
+            virtuals: true,
         },
     }
 );
 
-schema.pre("save", convertToLowerCase);
-
-const Reaction = model('Reaction', schema);
-
-module.exports = Reaction;
+module.exports = schema;

@@ -12,7 +12,7 @@ const userSchema = {
         type: String,
         required: true,
         unique: true,
-        validate: [validateEmail, "Please provide a corerct email address"]
+        validate: [validateEmail, "Please provide a correct email address"]
     },
     first: {
         type: String,
@@ -24,23 +24,33 @@ const userSchema = {
         required: true,
         max_length: 50,
     },
-    thoughts: {
+    thoughts: [{
         type: Schema.Types.ObjectId,
         ref: "Thought"
-    },
-    friends: {},
-    assignments: [],
+    }],
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }],
 }
 const schema = new Schema(
     userSchema,
     {
         toJSON: {
-            getters: true,
+            virtuals: true,
         },
     }
 );
 
 schema.pre("save", convertToLowerCase);
+
+// Create a virtual property `fullName` that gets and sets the user's full name
+schema
+    .virtual('friendCount')
+    // Getter
+    .get(function () {
+        return this.friends.length;
+    })
 
 const User = model('User', schema);
 
