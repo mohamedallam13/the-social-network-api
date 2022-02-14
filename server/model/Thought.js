@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 
 
-// Schema to create Student model
+// Schema to create Thought model
 const thoughtSchema = {
     thoughtText: {
         type: String,

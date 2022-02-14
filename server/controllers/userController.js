@@ -18,28 +18,21 @@ const addUser = async (req, res) => {
 }
 
 const getAllUsers = async (req, res) => {
-    const { username, email } = req.body;
     try {
-        const user = await User.create({
-            username,
-            email,
-
-        })
-        console.log(user);
-        return res.status(200).json(user);
+        const users = await User.find();
+        return res.status(200).json(users);
     } catch (err) {
         return res.status(500).json(err)
     }
 }
 const getUserById = async (req, res) => {
-    const { username, email } = req.body;
+    const _id = req.params.id;
     try {
-        const user = await User.create({
-            username,
-            email,
-
-        })
-        console.log(user);
+        const user = await User.findOne({ _id })
+            .select('-__v')
+        if (!user) {
+            return res.status(404).json({ message: 'No user with that ID' })
+        }
         return res.status(200).json(user);
     } catch (err) {
         return res.status(500).json(err)

@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const { validateEmail, convertToLowerCase } = require("../utils")
 
-// Schema to create Student model
+// Schema to create User model
 const userSchema = {
     username: {
         type: String,
