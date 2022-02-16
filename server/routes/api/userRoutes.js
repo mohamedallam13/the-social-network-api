@@ -18,7 +18,7 @@ router
     .get("/:id", getUserById)
     .put("/:id", updateUser)
     .delete("/:id", deleteUser)
-    .post("/:id/friends/:friendId", addFriend)
-    .delete("/:id/friends/:friendId", removeFriend)
+    .post("/:id/friends/:friend_id", addFriend)
+    .delete("/:id/friends/:friend_id", removeFriend)
 
 module.exports = router;

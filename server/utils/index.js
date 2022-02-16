@@ -4,7 +4,7 @@ const validateEmail = (email) => {
 }
 
 function convertToLowerCase(next) {
-    this.email = this.email.toLowercase();
+    this.email = this.email.toLowerCase();
     next();
 } // Mongoose expects normal functions for middleware for the pre method
 
