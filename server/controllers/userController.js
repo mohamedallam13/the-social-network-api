@@ -1,5 +1,4 @@
 const User = require("../model/User");
-const Reaction = require("../model/Reaction");
 const Thought = require("../model/Thought");
 
 // DONE
@@ -53,18 +52,26 @@ const updateUser = async (req, res) => {
         return res.status(500).json(err)
     }
 }
-//TODO
+
+//DONE
 const deleteUser = async (req, res) => {
     const _id = req.params.id
     try {
-        const user = await User.findOneAndDelete({ _id });
+        const user = await User.findOneAndRemove({ _id });
         if (!user) {
             return res.status(404).json({ message: 'No user with that ID' })
         }
-        await Thought.deleteMany({ _id: { $in: user.thoughts } }) //TODO: Delete All thoughts associated with the user
-
+        await Thought.deleteMany({ _id: { $in: user.thoughts } })
+        //Remove from friends list of all friends
+        const friends = await User.find({ _id: { $in: user.friends } })
+        friends.forEach(async function (friendObj) {
+            const id = friendObj._id;
+            console.log(id);
+            await User.findByIdAndUpdate({ _id: id }, { $pull: { friends: _id } })
+        })
         return res.status(200).json({ message: 'User and associated thoughts deleted!' });
     } catch (err) {
+        console.log(err)
         return res.status(500).json(err)
     }
 }
@@ -73,6 +80,9 @@ const deleteUser = async (req, res) => {
 const addFriend = async (req, res) => {
     const _id = req.params.id;
     const friend_id = req.params.friend_id;
+    if (_id == friend_id) {
+        return res.status(400).json({ message: "User can not befriend themselves!" })
+    }
     console.log(_id, friend_id)
     try {
         const user = await User.findOneAndUpdate(

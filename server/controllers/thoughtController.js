@@ -1,5 +1,4 @@
 const User = require("../model/User");
-const Reaction = require("../model/Reaction");
 const Thought = require("../model/Thought");
 
 //DONE
@@ -87,18 +86,42 @@ const deleteThought = async (req, res) => {
         res.status(500).json(err);
     }
 }
+
+//DONE
 const addReaction = async (req, res) => {
     try {
-
+        const thought = await Thought.findOneAndUpdate(
+            { _id: req.params.id },
+            { $addToSet: { reactions: req.body } },
+            { runValidators: true, new: true }
+        );
+        if (!thought) {
+            res.status(404).json({ message: 'No thought with this id!' });
+        } else {
+            res.json(thought);
+        }
     } catch (err) {
-
+        console.log(err);
+        res.status(500).json(err);
     }
 }
+
+//DONE
 const deleteReaction = async (req, res) => {
     try {
-
+        const thought = await Thought.findOneAndUpdate(
+            { _id: req.params.id },
+            { $pull: { reactions: { _id: req.params.reaction_id } } },
+            { runValidators: true, new: true }
+        );
+        if (!thought) {
+            res.status(404).json({ message: 'No thought with this id!' });
+        } else {
+            res.json(thought);
+        }
     } catch (err) {
-
+        console.log(err);
+        res.status(500).json(err);
     }
 }
 

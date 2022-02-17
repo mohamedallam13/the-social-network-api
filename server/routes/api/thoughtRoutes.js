@@ -19,6 +19,6 @@ router
     .put("/:id", updateThought)
     .delete("/:id", deleteThought)
     .post("/:id/reactions/", addReaction)
-    .delete("/:id/reactions/:reactionId", deleteReaction)
+    .delete("/:id/reactions/:reaction_id", deleteReaction)
 
 module.exports = router;

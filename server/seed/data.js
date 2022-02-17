@@ -51,8 +51,7 @@ const NAMES = [
     'Zoubaeir',
     'Zubair',
     'Zubayr',
-    'Zuriel',
-    ``,
+    'Zuriel'
 ];
 
 const THOUGHTS = [
