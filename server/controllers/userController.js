@@ -1,7 +1,6 @@
 const User = require("../model/User");
 const Thought = require("../model/Thought");
 
-// DONE
 const addUser = async (req, res) => {
     try {
         const user = await User.create(req.body)
@@ -12,17 +11,16 @@ const addUser = async (req, res) => {
     }
 }
 
-// DONE
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
         return res.status(200).json(users);
     } catch (err) {
+        console.log(err)
         return res.status(500).json(err)
     }
 }
 
-//DONE
 const getUserById = async (req, res) => {
     const _id = req.params.id;
     try {
@@ -37,7 +35,6 @@ const getUserById = async (req, res) => {
     }
 }
 
-//DONE
 const updateUser = async (req, res) => {
     const _id = req.params.id;
     try {
@@ -45,15 +42,13 @@ const updateUser = async (req, res) => {
             { _id },
             { $set: req.body },
             { runValidators: true, new: true });
-
-        console.log(user);
         return res.status(200).json(user);
     } catch (err) {
+        console.log(err)
         return res.status(500).json(err)
     }
 }
 
-//DONE
 const deleteUser = async (req, res) => {
     const _id = req.params.id
     try {
@@ -66,7 +61,6 @@ const deleteUser = async (req, res) => {
         const friends = await User.find({ _id: { $in: user.friends } })
         friends.forEach(async function (friendObj) {
             const id = friendObj._id;
-            console.log(id);
             await User.findByIdAndUpdate({ _id: id }, { $pull: { friends: _id } })
         })
         return res.status(200).json({ message: 'User and associated thoughts deleted!' });
@@ -76,14 +70,12 @@ const deleteUser = async (req, res) => {
     }
 }
 
-//DONE
 const addFriend = async (req, res) => {
     const _id = req.params.id;
     const friend_id = req.params.friend_id;
     if (_id == friend_id) {
         return res.status(400).json({ message: "User can not befriend themselves!" })
     }
-    console.log(_id, friend_id)
     try {
         const user = await User.findOneAndUpdate(
             { _id },
@@ -104,7 +96,6 @@ const addFriend = async (req, res) => {
     }
 }
 
-//DONE
 const removeFriend = async (req, res) => {
     const _id = req.params.id;
     const friend_id = req.params.friend_id;
@@ -121,7 +112,6 @@ const removeFriend = async (req, res) => {
             { new: true }
         )
 
-        // console.log([user, friend]);
         return res.status(200).json([user, friend]);
     } catch (err) {
         console.log(err)

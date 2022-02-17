@@ -1,7 +1,6 @@
 const User = require("../model/User");
 const Thought = require("../model/Thought");
 
-//DONE
 const addThought = async (req, res) => {
     try {
         const thought = await Thought.create(req.body);
@@ -10,8 +9,6 @@ const addThought = async (req, res) => {
             { $addToSet: { thoughts: thought._id } },
             { new: true }
         )
-
-        console.log(thought, user)
         res.status(200).json({ user, thought });
     } catch (err) {
         console.log(err);
@@ -19,7 +16,6 @@ const addThought = async (req, res) => {
     }
 }
 
-//DONE
 const getAllThoughts = async (req, res) => {
     try {
         const thoughts = await Thought.find();
@@ -30,7 +26,6 @@ const getAllThoughts = async (req, res) => {
     }
 }
 
-//DONE
 const getThoughtById = async (req, res) => {
     const _id = req.params.id;
     try {
@@ -45,7 +40,6 @@ const getThoughtById = async (req, res) => {
     }
 }
 
-//DONE
 const updateThought = async (req, res) => {
     const _id = req.params.id;
     try {
@@ -56,7 +50,6 @@ const updateThought = async (req, res) => {
         if (!thought) {
             return res.status(404).json("Thought not found!")
         }
-        console.log(thought);
         return res.status(200).json(thought);
     } catch (err) {
         console.log(err)
@@ -64,7 +57,6 @@ const updateThought = async (req, res) => {
     }
 }
 
-//DONE
 const deleteThought = async (req, res) => {
     const _id = req.params.id;
     try {
@@ -72,7 +64,6 @@ const deleteThought = async (req, res) => {
         if (!thought) {
             return res.status(404).json({ message: "Thought does not exist!" });
         }
-        console.log(thought)
         const thought_id = thought._id;
         const username = thought.username;
         await User.findOneAndUpdate(
@@ -87,7 +78,6 @@ const deleteThought = async (req, res) => {
     }
 }
 
-//DONE
 const addReaction = async (req, res) => {
     try {
         const thought = await Thought.findOneAndUpdate(
@@ -106,7 +96,6 @@ const addReaction = async (req, res) => {
     }
 }
 
-//DONE
 const deleteReaction = async (req, res) => {
     try {
         const thought = await Thought.findOneAndUpdate(
