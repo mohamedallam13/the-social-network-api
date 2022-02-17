@@ -30,6 +30,9 @@ const schema = new Schema(
     }
 );
 
+
+// Create a virtual property `reactionCount` that gets count of reactions
+
 schema
     .virtual('reactionCount')
     // Getter

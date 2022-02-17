@@ -43,13 +43,30 @@ const schema = new Schema(
 );
 
 schema.pre("save", convertToLowerCase);
+// schema.pre("insertMany", convertToLowerCase); Seeding does not 
 
-// Create a virtual property `fullName` that gets and sets the user's full name
+// Create a virtual property `friendCount` that gets friends list count
+
 schema
     .virtual('friendCount')
     // Getter
     .get(function () {
         return this.friends.length;
+    })
+
+// Create a virtual property `fullName` that gets and sets the user's full name
+
+schema
+    .virtual('fullName')
+    // Getter
+    .get(function () {
+        return `${this.first} ${this.last}`;
+    })
+    //Setter
+    .set(function (fullName) {
+        const first = fullName.split(" ")[0];
+        const last = fullName.split(" ")[1];
+        this.set({ first, last });
     })
 
 const User = model('User', schema);

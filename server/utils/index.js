@@ -4,7 +4,7 @@ const validateEmail = (email) => {
 }
 
 function convertToLowerCase(next) {
-    console.log(this.email, this.username);
+    console.log(this.email)
     this.email = this.email.toLowerCase();
     this.username = this.username.replace(/-/g, '').toLowerCase();
     next();
