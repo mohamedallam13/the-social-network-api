@@ -54,9 +54,7 @@ MIT
 
 This following gif shows the whole journey of the application.
 
-![journey](./screenshots/journey.gif)
-
-Check video for demonstartion [here](https://youtu.be/aocVsGx5NkA)
+Check video for demonstartion [here](https://youtu.be/C2FjFK7jcA8)
 
 ## Questions 
 
